@@ -155,7 +155,7 @@ export default function Auth() {
             <Button title="Save" disabled={loading} onPress={() => saveUserSpecificData()} />
           </View>
           <View style={styles.verticallySpaced}>
-          {!foodLoading && <Text>Your favorite food is: {food}</Text>}
+          {!foodLoading && <Text style={{ color: 'white' }}>Your favorite food is: {food}</Text>}
         </View>
         </>
       )}
