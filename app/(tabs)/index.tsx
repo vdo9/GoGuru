@@ -1,35 +1,3 @@
-// import { StyleSheet } from 'react-native';
-
-// import EditScreenInfo from '@/components/EditScreenInfo';
-// import { Text, View } from '@/components/Themed';
-
-// export default function TabOneScreen() {
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Tab One</Text>
-//       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-//       <EditScreenInfo path="app/(tabs)/index.tsx" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   title: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//   },
-//   separator: {
-//     marginVertical: 30,
-//     height: 1,
-//     width: '80%',
-//   },
-// });
-
 import React, { useRef, useState } from 'react';
 import {
   SafeAreaView,
@@ -40,7 +8,6 @@ import {
   FlatList,
   TextInput,
   Dimensions,
-  Modal,
   TouchableOpacity
 } from 'react-native';
 
@@ -48,6 +15,7 @@ import { Modalize } from 'react-native-modalize';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import Card from '../../components/Card';
+import HeaderSection from '@/components/HeaderSection';
 
 
 const DATA = [
@@ -62,24 +30,23 @@ const DATA = [
   // ... add more items as needed
 ];
 
-const Item = ({ title, subtitle, onPress }: { title: string, subtitle: string, onPress: () => void }) => (
-  <TouchableOpacity style={styles.item} onPress={onPress}>
-    <View style={styles.thumbnail} />
-    <View style={styles.itemContent}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.subtitle}>{subtitle}</Text>
-    </View>
-  </TouchableOpacity>
-);
+// const Item = ({ title, subtitle, onPress }: { title: string, subtitle: string, onPress: () => void }) => (
+//   <TouchableOpacity style={styles.item} onPress={onPress}>
+//     <View style={styles.thumbnail} />
+//     <View style={styles.itemContent}>
+//       <Text style={styles.title}>{title}</Text>
+//       <Text style={styles.subtitle}>{subtitle}</Text>
+//     </View>
+//   </TouchableOpacity>
+// );
 
 const App = () => {
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
   // const [modalVisible, setModalVisible] = useState(false);
   const modalizeRef = useRef<Modalize>(null);
-
   
-  const renderItem = ({ item }: { item: { id: string, title: string, subtitle: string } }) => (
+  const renderItem = ({ item }) => (
     <Card
       item={item}
       onPress={() => {
@@ -103,8 +70,9 @@ const App = () => {
     <GestureHandlerRootView style={{flex: 1}}>
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Community Plans</Text>
+  
+      <HeaderSection title="Community Plans"/>
+        {/* <Text style={styles.headerText}>Community Plans</Text> */}
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
@@ -114,18 +82,16 @@ const App = () => {
             value={searchInput}
           />
         </View>
-      </View>
+    
       <FlatList
         data={filteredData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContentContainer}
       />
-      <Modalize ref={modalizeRef} modalHeight={500}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalText}>{selectedItem?.title}</Text>
-          <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
-        </View>
+      <Modalize ref={modalizeRef} modalHeight={620} modalStyle={styles.modalContent}>
+        <Text style={styles.modalHeader}>{selectedItem?.title}</Text>
+        <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
       </Modalize>
     </SafeAreaView>
     </GestureHandlerRootView>
@@ -135,6 +101,10 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 24,
+    backgroundColor: '#1F1F1F',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   searchContainer: {
     width: Dimensions.get('window').width - 40, // Adjust the subtraction value as needed
@@ -148,63 +118,32 @@ const styles = StyleSheet.create({
     color: 'black',
     paddingLeft: 10
   },
-  header: {
-    paddingVertical: 20,
-    paddingLeft: 20,
-    alignItems: 'flex-start',
-    borderBottomColor: '#ccc',
-  },
-  headerText: {
-    fontSize: 22,
-    color: 'white',
-    fontWeight: 'bold',
-  },
   listContentContainer: {
-    paddingHorizontal: 16,
-  },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#e0e0e0',
-    borderRadius: 8,
     marginVertical: 8,
-    padding: 16,
-  },
-  thumbnail: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#d0d0d0',
-    marginRight: 16,
-  },
-  itemContent: {
-    flex: 1,
   },
   title: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   subtitle: {
     fontSize: 14,
     color: '#333',
   },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 20,
-    backgroundColor: '#FFA500',
-  },
-  footerButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#fff',
-  },
   modalContent: {
-    padding: 15,
+    backgroundColor: '#424242',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 24,
+  },
+  modalHeader: {
+    fontSize: 20,
+    marginBottom: 16,
+    color: '#fff',
+    fontWeight: 'bold',
   },
   modalText: {
-    fontSize: 16,
+    fontSize: 18,
+    color: '#fff',
   },
 });
 
