@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, } from 'react-native';
 
 const Card = ({ item, onPress }: { item: { title: string, subtitle: string }, onPress: () => void }) => (
   <TouchableOpacity style={styles.item} onPress={onPress}>
@@ -13,17 +13,20 @@ const Card = ({ item, onPress }: { item: { title: string, subtitle: string }, on
 
 const styles = StyleSheet.create({
   item: {
+    flex: 1,
+    width: Dimensions.get('window').width - 50,
+    height: 124,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#e0e0e0',
-    borderRadius: 8,
+    backgroundColor: '#424242',
+    borderRadius: 14,
     marginVertical: 8,
     padding: 16,
   },
   thumbnail: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 80,
+    height: 80,
+    borderRadius: 10,
     backgroundColor: '#d0d0d0',
     marginRight: 16,
   },
@@ -32,11 +35,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    color: '#FFF',
+    fontWeight: 'bold', 
   },
   subtitle: {
-    fontSize: 14,
-    color: '#333',
+    fontSize: 16,
+    color: '#FFF',
   },
 });
 
