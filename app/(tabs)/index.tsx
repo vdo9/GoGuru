@@ -46,7 +46,7 @@ const App = () => {
   // const [modalVisible, setModalVisible] = useState(false);
   const modalizeRef = useRef<Modalize>(null);
   
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: { id: string, title: string, subtitle: string } }) => (
     <Card
       item={item}
       onPress={() => {
