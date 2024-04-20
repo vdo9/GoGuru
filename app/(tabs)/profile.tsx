@@ -1,7 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const three = () => {
+
+const profile = () => {
+
   return (
     <View style={styles.container}>
       {/* Profile Image */}
@@ -23,8 +26,8 @@ const three = () => {
         <Text style={styles.buttonText}>Edit Profile</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -62,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default three
+export default profile;
