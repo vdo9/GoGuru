@@ -30,7 +30,7 @@
 //   },
 // });
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -40,7 +40,14 @@ import {
   FlatList,
   TextInput,
   Dimensions,
+  Modal,
+  TouchableOpacity
 } from 'react-native';
+
+import { Modalize } from 'react-native-modalize';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+
 
 const DATA = [
   { id: '1', title: 'Picnic Date Idea', subtitle: 'Filled with a nice park and cute cafes to visit nearby!' },
@@ -54,21 +61,32 @@ const DATA = [
   // ... add more items as needed
 ];
 
-const Item = ({ title, subtitle }: { title: string, subtitle: string }) => (
-  <View style={styles.item}>
+const Item = ({ title, subtitle, onPress }: { title: string, subtitle: string, onPress: () => void }) => (
+  <TouchableOpacity style={styles.item} onPress={onPress}>
     <View style={styles.thumbnail} />
     <View style={styles.itemContent}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.subtitle}>{subtitle}</Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 const App = () => {
   const [searchInput, setSearchInput] = useState('');
+  const [selectedItem, setSelectedItem] = useState(null);
+  // const [modalVisible, setModalVisible] = useState(false);
+  const modalizeRef = useRef<Modalize>(null);
+
   
-  const renderItem = ({ item }: { item: { title: string, subtitle: string } }) => (
-    <Item title={item.title} subtitle={item.subtitle} />
+  const renderItem = ({ item }: { item: { id: string, title: string, subtitle: string } }) => (
+    <Item
+      title={item.title}
+      subtitle={item.subtitle}
+      onPress={() => {
+        setSelectedItem(item);
+        modalizeRef.current?.open();
+      }}
+    />
   );
 
   const filteredData = DATA.filter((item, index) => {
@@ -82,6 +100,7 @@ const App = () => {
   });
 
   return (
+    <GestureHandlerRootView style={{flex: 1}}>
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <View style={styles.header}>
@@ -102,7 +121,14 @@ const App = () => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContentContainer}
       />
+      <Modalize ref={modalizeRef} modalHeight={500}>
+        <View style={styles.modalContent}>
+          <Text style={styles.modalText}>{selectedItem?.title}</Text>
+          <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
+        </View>
+      </Modalize>
     </SafeAreaView>
+    </GestureHandlerRootView>
   );
 };
 
@@ -173,6 +199,12 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     backgroundColor: '#fff',
+  },
+  modalContent: {
+    padding: 15,
+  },
+  modalText: {
+    fontSize: 16,
   },
 });
 
