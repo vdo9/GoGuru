@@ -47,6 +47,7 @@ import {
 import { Modalize } from 'react-native-modalize';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import Card from '../../components/Card';
 
 
 const DATA = [
@@ -79,9 +80,8 @@ const App = () => {
 
   
   const renderItem = ({ item }: { item: { id: string, title: string, subtitle: string } }) => (
-    <Item
-      title={item.title}
-      subtitle={item.subtitle}
+    <Card
+      item={item}
       onPress={() => {
         setSelectedItem(item);
         modalizeRef.current?.open();
