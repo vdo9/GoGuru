@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, ScrollView } from 'react-native';
-// import { runGeminiQuery } from './gemini';
+//comment out this next line if you want it to work without gemini
+//follow the instructions in gemini.js as well
+//note rn, my thing breaks upon loading the expo go
+const runGeminiQuery = require('../../gemini/gemini').runGeminiQuery;
 
 const Gemini = () => {
   const [userQuery, setUserQuery] = useState('');
@@ -9,11 +12,13 @@ const Gemini = () => {
 
   const handleUserQuerySubmit = async () => {
     try {
-      // const result = await runGeminiQuery(userQuery, userLocation);
-      // setResponse(result);
+      //comment out the next two lines if you want it to work without gemini
+      const result = await runGeminiQuery(userQuery, userLocation);
+      setResponse(result);
       console.log('User Query:', userQuery);
       console.log('User Location:', userLocation);
-      setResponse('This is a placeholder response. Gemini integration is currently commented out.');
+      //uncomment this out to put a placeholder instead of gemini
+      // setResponse('This is a placeholder response. Gemini integration is currently commented out.');
     } catch (error) {
       console.error('Error running Gemini query:', error);
     }
