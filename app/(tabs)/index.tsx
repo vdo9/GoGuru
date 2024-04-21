@@ -30,16 +30,6 @@ const DATA = [
   // ... add more items as needed
 ];
 
-// const Item = ({ title, subtitle, onPress }: { title: string, subtitle: string, onPress: () => void }) => (
-//   <TouchableOpacity style={styles.item} onPress={onPress}>
-//     <View style={styles.thumbnail} />
-//     <View style={styles.itemContent}>
-//       <Text style={styles.title}>{title}</Text>
-//       <Text style={styles.subtitle}>{subtitle}</Text>
-//     </View>
-//   </TouchableOpacity>
-// );
-
 const App = () => {
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
