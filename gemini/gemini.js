@@ -38,7 +38,7 @@ async function run() {
   // Create a Yelp Fusion client
   const client = yelp.client(yelpApiKey);
 
-  // Perform the Yelp search
+  // Perform the Yelp searchf
   client.search(yelpSearchRequest).then(response => {
     const results = response.jsonBody.businesses;
     console.log("Yelp Search Results:");
