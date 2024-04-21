@@ -27,7 +27,7 @@ export default function TabLayout() {
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
         tabBarInactiveTintColor: 'white',
-        tabBarStyle: { backgroundColor: 'orange' },
+        tabBarStyle: { backgroundColor: '#F76800' },
         tabBarShowLabel:false
       }}>
       <Tabs.Screen
@@ -35,7 +35,7 @@ export default function TabLayout() {
         options={{
           title: '',
           headerTitleStyle: { display: 'none' },
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={"color"} />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
