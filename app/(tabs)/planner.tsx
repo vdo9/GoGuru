@@ -54,7 +54,7 @@ const planner = () => {
             <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
           </View>
         </Modalize>
-        <TouchableOpacity style={styles.addButton} onPress={() => push('../PlanDetailsScreen')}>
+        <TouchableOpacity style={styles.addButton} onPress={() => push('../plans/PlansDetailsScreen')}>
           <Text>Add Plan</Text>
         </TouchableOpacity>
       </SafeAreaView>
