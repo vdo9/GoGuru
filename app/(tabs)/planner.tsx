@@ -25,8 +25,6 @@ const { push } = useRouter();
 const planner = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const modalizeRef = useRef<Modalize>(null);
-  const navigation = useNavigation();
-
 
   const renderItem = ({ item }: { item: { id: string, title: string, subtitle: string } }) => (
     <Card
@@ -52,9 +50,17 @@ const planner = () => {
         <Text style={styles.modalHeader}>{selectedItem?.title}</Text>
         <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
         </Modalize>
-        <TouchableOpacity style={styles.addButton} onPress={() => push('../plans/PlansDetailsScreen')}>
+        <TouchableOpacity
+            onPress={() => {push('../plans/PlansDetailsScreen');}}
+            style={styles.signin}
+          >
+            <View>
+              <Text style={{ color: 'white', textAlign: 'center' }}>Add Plan</Text>
+            </View>
+          </TouchableOpacity>
+        {/* <TouchableOpacity style={styles.addButton} onPress={() => push('../plans/PlansDetailsScreen')}>
           <Text>Add Plan</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </SafeAreaView>
     </GestureHandlerRootView>
   )
@@ -65,7 +71,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    // justifyContent: 'center',
     backgroundColor: '#1F1F1F',
    
   },
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   addButton: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 40,
     paddingVertical: 10,
     backgroundColor: '#ddd',
     margin: 10,
@@ -102,6 +107,18 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 18,
     color: '#fff',
+  },
+  signin: {
+    marginTop: 18,
+    marginBottom: 12,
+    display: 'flex',
+    width: 326,
+    padding: 15,
+    alignItems: 'center',
+    padding: 20,
+    gap: 5,
+    borderRadius: 14,
+    backgroundColor: '#F76800',
   },
 });
 

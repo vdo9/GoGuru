@@ -1,54 +1,109 @@
-import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native'
-import React, { useState } from 'react'
-import { StyleSheet } from 'react-native';
+// 
 
+import { View, Text, TextInput, TouchableOpacity, Button, FlatList, Image } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import { StyleSheet } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 const PlanDetailsScreen = () => {
-    const [planName, setPlanName] = useState('');
-  
-    return (
-      <View style={styles.container}>
-        <TextInput
-          placeholder="What's the name of your plan?"
-          placeholderTextColor="lightgrey"
-          value={planName}
-          onChangeText={setPlanName}
-          style={styles.input}
-        />
-        <TouchableOpacity style={styles.circleButton} onPress={() => {/* Code to open chat screen */}}>
-          <Text>Chat</Text>
-        </TouchableOpacity>
-        {/* Your event component goes here, duplicate as needed for initial events */}
-        <Button title="Add Event" onPress={() => {/* Code to add an event */}} />
-      </View>
-    );
+  const [planName, setPlanName] = useState('');
+  const [messages, setMessages] = useState([{ id: '1', text: "So, what's the plan today?", sender: 'bot' }]);
+  const [input, setInput] = useState('');
+  const flatListRef = useRef<FlatList>(null);
+
+  useEffect(() => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToEnd();
+    }
+  }, [messages]);
+
+  const handleSend = () => {
+    const newMessage = { id: Date.now().toString(), text: input, sender: 'user' };
+    setInput('');
+
+    setTimeout(() => {
+      setMessages([...messages, newMessage]);
+    }, 500); // Delay of 500 milliseconds
   };
 
+  return (
+    <View style={styles.container}>
+      <FlatList
+        ref={flatListRef}
+        data={messages}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={item.sender === 'bot' ? styles.botMessage : styles.userMessage}>
+            {item.sender === 'bot' && <Image source={require('../../assets/images/logo2.png')} style={styles.botIcon} />}
+            <Text style={styles.bottext}>{item.text}</Text>
+          </View>
+        )}
+      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Type a message..."
+          placeholderTextColor="grey"
+          value={input}
+          onChangeText={setInput}
+          style={styles.input}
+        />
+        <TouchableOpacity onPress={handleSend}>
+          <Icon name="forward" size={24} color="#000" />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-    circleButton: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: '#ddd',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        right: 10,
-        top: 10,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: 'gray',
-        padding: 10,
-        margin: 10,
-        width: '80%',
-      },
+  container: {
+    flex: 1,
+    backgroundColor: '#FFA500', // Set the background color to orange
+  },
+  botMessage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#000000', // Set the bot messages background color to dark orange
+    borderRadius: 20,
+    margin: 15,
+    padding: 12,
+    alignSelf: 'flex-start', // Align bot messages to the left
+    maxWidth: '80%', // Limit width to 80% of the screen width
+    flexWrap: 'wrap', // Allow the text to wrap
+  },
+  userMessage: {
+    alignSelf: 'flex-end', // Align user messages to the right
+    backgroundColor: '#F76800', // Set the user messages background color to orange
+    borderRadius: 20,
+    margin: 10,
+    padding: 10,
+    maxWidth: '80%', // Limit width to 80% of the screen width
+    flexWrap: 'wrap', // Allow the text to wrap
+  },
+  botIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+  },
+  bottext: {
+    color: 'white'
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ddd',
+    borderRadius: 20,
+    margin: 10,
+    padding: 15, // Increase padding to make the box thicker
+    position: 'absolute', // Position the box absolutely
+    bottom: 30, // Position the box higher up from the bottom of the screen
+    left: 20, // Position the box 10 pixels from the left of the screen
+    right: 20, // Position the box 10 pixels from the right of the screen
+  },
+  input: {
+    flex: 1,
+    marginRight: 10,
+  },
 });
 
 export default PlanDetailsScreen;
