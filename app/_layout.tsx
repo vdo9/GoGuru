@@ -14,6 +14,7 @@ function RootLayoutNav() {
       <StatusBar style="light" backgroundColor='#000000'/>
       <Stack>
         <Stack.Screen name="Auth" options={{headerShown: false}}/>
+        <Stack.Screen name="survey" options={{headerShown: false}}/>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>

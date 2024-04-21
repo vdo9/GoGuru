@@ -15,7 +15,7 @@ export default function Auth() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [foodLoading, setFoodLoading] = useState(true);
 
-  const { push } = useRouter();
+  const { push, replace } = useRouter();
 
 
   useEffect(() => {
@@ -146,13 +146,17 @@ export default function Auth() {
           </View> */}
           <TouchableOpacity
             disabled={loading}
-            onPress={() => signInWithEmail()}
+            onPress={() => {signInWithEmail(); push('./survey');}}
             style={styles.signin}
           >
             <View>
               <Text style={{ color: 'white', textAlign: 'center' }}>Sign in</Text>
             </View>
           </TouchableOpacity>
+          <Text style={styles.signupText}>No account? <Text style={styles.signupLink}>Sign up!</Text></Text>
+          <View style={styles.bottomTextContainer}>
+            <Text style={styles.bottomText}>The ultimate place to find where to go!</Text>
+          </View>
           {/* <View style={styles.verticallySpaced}>
             <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
           </View> */}
@@ -174,7 +178,7 @@ export default function Auth() {
             />
           </View>
           <View style={styles.verticallySpaced}>
-            <Button title="Save" disabled={loading} onPress={() => {saveUserSpecificData(); push('./(tabs)');}} />
+            <Button title="Save" disabled={loading} onPress={() => {push('./survey'); replace('./(tabs)');}} />
           </View>
           <View style={styles.verticallySpaced}>
           {!foodLoading && <Text style={{ color: 'white' }}>Your favorite food is: {food}</Text>}
@@ -187,6 +191,27 @@ export default function Auth() {
 }
 
 const styles = StyleSheet.create({
+  signupText: {
+    color: 'white',
+    fontSize: 14, // Adjust this value as needed
+    textAlign: 'center',
+    marginTop: 20, // Adjust this value as needed
+  },
+  signupLink: {
+    color: 'orange', // Adjust this value as needed
+
+  },
+  bottomTextContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 50, // Adjust this value as needed
+  },
+  bottomText: {
+    color: 'white',
+    fontSize: 14, // Adjust this value as needed
+    textAlign: 'center',
+  },
   container: {
     marginTop: 40,
     padding: 12,

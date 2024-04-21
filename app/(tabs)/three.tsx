@@ -1,92 +1,17 @@
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
 import React, { useState } from 'react';
 import { supabase } from '../../lib/supabase';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
-const Three = () => {
-  const [foodPrefs, setFoodPrefs] = useState(['', '', '']);
-  const [activityPrefs, setActivityPrefs] = useState(['', '', '']);
-
-  const handleFoodPrefChange = (index, value) => {
-    const newFoodPrefs = [...foodPrefs];
-    newFoodPrefs[index] = value;
-    setFoodPrefs(newFoodPrefs);
-  };
-
-  const handleActivityPrefChange = (index, value) => {
-    const newActivityPrefs = [...activityPrefs];
-    newActivityPrefs[index] = value;
-    setActivityPrefs(newActivityPrefs);
-  };
-
-  const handleSubmit = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (user) {
-      const { data, error } = await supabase
-        .from('userpref')
-        .upsert({
-          userid: user.id,
-          food1: foodPrefs[0],
-          food2: foodPrefs[1],
-          food3: foodPrefs[2],
-          activity1: activityPrefs[0],
-          activity2: activityPrefs[1],
-          activity3: activityPrefs[2],
-        });
-
-      if (error) {
-        console.error('Error saving user preferences:', error);
-      } else {
-        console.log('User preferences saved successfully:', data);
-      }
-    } else {
-      console.error('No authenticated user found');
-    }
-  };
-
+const three = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Favorite Foods/Drinks:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Food 1"
-        value={foodPrefs[0]}
-        onChangeText={(text) => handleFoodPrefChange(0, text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Food 2"
-        value={foodPrefs[1]}
-        onChangeText={(text) => handleFoodPrefChange(1, text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Food 3"
-        value={foodPrefs[2]}
-        onChangeText={(text) => handleFoodPrefChange(2, text)}
-      />
-
-      <Text style={styles.heading}>Favorite Activities:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Activity 1"
-        value={activityPrefs[0]}
-        onChangeText={(text) => handleActivityPrefChange(0, text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Activity 2"
-        value={activityPrefs[1]}
-        onChangeText={(text) => handleActivityPrefChange(1, text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Activity 3"
-        value={activityPrefs[2]}
-        onChangeText={(text) => handleActivityPrefChange(2, text)}
-      />
-
-      <Button title="Submit" onPress={handleSubmit} />
+      <Text style={styles.header}>Profile</Text>
+      <Image source={require('../../assets/images/profile.png')} />
+      <Text style={styles.name}>Skylar Smith</Text>
+      <Text style={styles.role}>Software Engineer</Text>
+      <TouchableOpacity style={styles.saveButton} onPress={() => console.log('Save Pressed')}>
+        <Text style={styles.saveButtonText}>Save</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -96,25 +21,50 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black',
-    paddingHorizontal: 20,
+    backgroundColor: '#000', // Assuming the background is black
   },
-  heading: {
-    color: 'white',
-    fontSize: 20,
+  header: {
+    fontSize: 24,
+    color: '#FFF',
+    position: 'absolute',
+    top: 60,
     fontWeight: 'bold',
-    marginTop: 20,
-    marginBottom: 10,
   },
-  input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    color: 'white',
+  profileImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 75, // Make it half of width and height to create a circle
+    borderColor: 'orange', // Assuming the border color should match the button
+    borderWidth: 4,
+    marginBottom: 16,
+  },
+  name: {
+    fontSize: 22,
+    color: '#FFF',
+    fontWeight: 'bold',
+  },
+  role: {
+    fontSize: 18,
+    color: '#FFF',
+    marginBottom: 24,
+  },
+  saveButton: {
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    borderRadius: 20,
+    backgroundColor: 'orange',
+    // Shadow styles
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  saveButtonText: {
+    fontSize: 20,
+    color: '#FFF',
+    fontWeight: 'bold',
   },
 });
 
-export default Three;
+export default three;

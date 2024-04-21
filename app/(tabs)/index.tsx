@@ -48,11 +48,11 @@ const App = () => {
 
   const filteredData = DATA.filter((item, index) => {
     if (searchInput === '91732') {
-      return index < 3;
+      return index % 2 == 0 && index > 3;
     } else if (searchInput.toLowerCase() === 'los angeles') {
       return true;
     } else {
-      return false;
+      return item;
     }
   });
 
@@ -77,11 +77,17 @@ const App = () => {
         data={filteredData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContentContainer}
-      />
-      <Modalize ref={modalizeRef} modalHeight={620} modalStyle={styles.modalContent}>
-        <Text style={styles.modalHeader}>{selectedItem?.title}</Text>
-        <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
+        contentContainerStyle={{ ...styles.listContentContainer }} // Add paddingRight here
+        />
+      <Modalize 
+        ref={modalizeRef} 
+        modalStyle={styles.modalContent} 
+        adjustToContentHeight={true} // Add this line
+      >
+        <View style={{ height: 500 }}> // Add View with a fixed height here
+          <Text style={styles.modalHeader}>{selectedItem?.title}</Text>
+          <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
+        </View>
       </Modalize>
     </SafeAreaView>
     </GestureHandlerRootView>
@@ -92,7 +98,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 24,
-    backgroundColor: '#1F1F1F',
+    backgroundColor: '#000000',
     justifyContent: 'center',
     alignItems: 'center',
   },
