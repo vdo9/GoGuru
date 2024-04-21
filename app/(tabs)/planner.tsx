@@ -41,18 +41,16 @@ const planner = () => {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="light-content" />
         <Text style={styles.header}>My Plans</Text>
         <FlatList
           data={DATA}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
-        <Modalize ref={modalizeRef} modalHeight={500}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{selectedItem?.title}</Text>
-            <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
-          </View>
+        <Modalize ref={modalizeRef} modalHeight={620} modalStyle={styles.modalContent}>
+        <Text style={styles.modalHeader}>{selectedItem?.title}</Text>
+        <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
         </Modalize>
         <TouchableOpacity style={styles.addButton} onPress={() => push('../plans/PlansDetailsScreen')}>
           <Text>Add Plan</Text>
@@ -67,13 +65,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     backgroundColor: '#1F1F1F',
    
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 20,
   },
   addButton: {
     paddingHorizontal: 20,
@@ -89,10 +88,20 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   modalContent: {
-    padding: 15,
+    backgroundColor: '#424242',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 24,
+  },
+  modalHeader: {
+    fontSize: 20,
+    marginBottom: 16,
+    color: '#fff',
+    fontWeight: 'bold',
   },
   modalText: {
-    fontSize: 16,
+    fontSize: 18,
+    color: '#fff',
   },
 });
 

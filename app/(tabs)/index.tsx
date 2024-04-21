@@ -79,15 +79,9 @@ const App = () => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ ...styles.listContentContainer }} // Add paddingRight here
         />
-      <Modalize 
-        ref={modalizeRef} 
-        modalStyle={styles.modalContent} 
-        adjustToContentHeight={true} // Add this line
-      >
-        <View style={{ height: 500 }}> // Add View with a fixed height here
-          <Text style={styles.modalHeader}>{selectedItem?.title}</Text>
-          <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
-        </View>
+      <Modalize ref={modalizeRef} modalHeight={620} modalStyle={styles.modalContent}>
+        <Text style={styles.modalHeader}>{selectedItem?.title}</Text>
+        <Text style={styles.modalText}>{selectedItem?.subtitle}</Text>
       </Modalize>
     </SafeAreaView>
     </GestureHandlerRootView>
