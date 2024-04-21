@@ -25,7 +25,7 @@ async function run() {
 
   // User selection (static implementation for demonstration purposes)
   const selectedFoodOptions = foodOptions.slice(0, 3); // Select the first 3 options
-  const userPreferences = ["vegetarian", "healthy"];
+  const userPreferences = ["vegetarian", "healthy", "grilled", "american",""];
   const userLocation = "San Francisco, CA";
 
   // Generate Yelp query
