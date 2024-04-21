@@ -13,32 +13,36 @@ import {
 
 import { Modalize } from 'react-native-modalize';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Image } from 'react-native';
 
 import Card from '../../components/Card';
 import HeaderSection from '@/components/HeaderSection';
 
 
 const DATA = [
-  { id: '1', title: 'Picnic Date Idea', subtitle: 'Filled with a nice park and cute cafes to visit nearby!' },
-  { id: '2', title: 'Skylars Best Night Ever', subtitle: 'Expect to eat, eat, and eat!' },
-  { id: '3', title: 'Scavenger Hunt Adventure', subtitle: 'Hidden treasures at each location!' },
-  { id: '4', title: 'Coffee Friends', subtitle: 'Guiding you through the best coffee spots in town ;)' },
-  { id: '5', title: 'Where should we go?', subtitle: 'Click the plan to see! Not clickbait.' },
-  { id: '6', title: 'Study Date <3', subtitle: 'Looking for a good study date? I got you!' },
-  { id: '7', title: 'Soul Searching in LA', subtitle: 'This plan takes you to the best spots in DTLA!! Live like a local.' },
+  { id: '1', title: 'Picnic Date Idea', subtitle: 'Filled with a nice park and cute cafes to visit nearby!', thumbnailUrl: require('../../assets/images/picnic.jpg') },
+  { id: '2', title: 'Skylars Best Night Ever', subtitle: 'Expect to eat, eat, and eat!' , thumbnailUrl: require('../../assets/images/picnic.jpg')},
+  { id: '3', title: 'Scavenger Hunt Adventure', subtitle: 'Hidden treasures at each location!' , thumbnailUrl: require('../../assets/images/picnic.jpg')},
+  { id: '4', title: 'Coffee Friends', subtitle: 'Guiding you through the best coffee spots in town ;)' , thumbnailUrl: require('../../assets/images/picnic.jpg')},
+  { id: '5', title: 'Where should we go?', subtitle: 'Click the plan to see! Not clickbait.' , thumbnailUrl: require('../../assets/images/picnic.jpg')},
+  { id: '6', title: 'Study Date <3', subtitle: 'Looking for a good study date? I got you!' , thumbnailUrl: require('../../assets/images/picnic.jpg')},
+  { id: '7', title: 'Soul Searching in LA', subtitle: 'This plan takes you to the best spots in DTLA!! Live like a local.' , thumbnailUrl: require('../../assets/images/picnic.jpg')},
 
   // ... add more items as needed
 ];
 
 const App = () => {
   const [searchInput, setSearchInput] = useState('');
-  const [selectedItem, setSelectedItem] = useState(null);
+  // const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<{ id: string; title: string; subtitle: string; thumbnailUrl: string } | null>(null);
+
   // const [modalVisible, setModalVisible] = useState(false);
   const modalizeRef = useRef<Modalize>(null);
   
-  const renderItem = ({ item }: { item: { id: string, title: string, subtitle: string } }) => (
+  const renderItem = ({ item }: { item: { id: string, title: string, subtitle: string, thumbnailUrl: string } }) => (
     <Card
       item={item}
+      thumbnailUrl={item.thumbnailUrl}
       onPress={() => {
         setSelectedItem(item);
         modalizeRef.current?.open();

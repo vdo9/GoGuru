@@ -1,9 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from 'react-native';
 
-const Card = ({ item, onPress }: { item: { title: string, subtitle: string }, onPress: () => void }) => (
+const Card = ({ item, onPress, thumbnailUrl }: { item: { title: string, subtitle: string }, onPress: () => void, thumbnailUrl: string }) => (
   <TouchableOpacity style={styles.item} onPress={onPress}>
-    <View style={styles.thumbnail} />
+    <Image
+        style={styles.thumbnail}
+        source={{ uri: thumbnailUrl }} 
+        // source={require('../assets/images/picnic.jpg')} 
+      />
+    {/* <ImageBackground source={{ uri: thumbnailUrl }} style={styles.thumbnail} /> */}
+    {/* <View style={styles.thumbnail} /> */}
     <View style={styles.itemContent}>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.subtitle}>{item.subtitle}</Text>
@@ -27,7 +33,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 10,
-    backgroundColor: '#d0d0d0',
+    // backgroundColor: '#d0d0d0',
     marginRight: 16,
   },
   itemContent: {
