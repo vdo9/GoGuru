@@ -1,13 +1,29 @@
-import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Button, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native';
 
 
 const PlanDetailsScreen = () => {
     const [planName, setPlanName] = useState('');
+    const [messages, setMessages] = useState([]);
+
+    const sendMessage = (message) => {
+      setMessages(prevMessages => [...prevMessages, { text: message, sender: 'user' }]);
+      // Add your code to send the message to the chatbot and get the response
+      // Then add the chatbot's response to the messages state
+    };
   
     return (
       <View style={styles.container}>
+        <FlatList
+        data={messages}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={item.sender === 'user' ? styles.userMessage : styles.botMessage}>
+            <Text>{item.text}</Text>
+          </View>
+        )}
+      />
         <TextInput
           placeholder="What's the name of your plan?"
           placeholderTextColor="lightgrey"
@@ -30,6 +46,24 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+      },
+      userMessage: {
+        alignSelf: 'flex-end',
+        backgroundColor: '#ddd',
+        borderRadius: 20,
+        margin: 10,
+        padding: 10,
+        maxWidth: '80%',
+        flexWrap: 'wrap',
+      },
+      botMessage: {
+        alignSelf: 'flex-start',
+        backgroundColor: '#ddd',
+        borderRadius: 20,
+        margin: 10,
+        padding: 10,
+        maxWidth: '80%',
+        flexWrap: 'wrap',
       },
     circleButton: {
         width: 50,
