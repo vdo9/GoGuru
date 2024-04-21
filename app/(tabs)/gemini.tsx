@@ -1,16 +1,19 @@
-//It's time
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, ScrollView } from 'react-native';
-const { runGeminiQuery } = require('../../gemini/gemini');
+// import { runGeminiQuery } from './gemini';
 
 const Gemini = () => {
   const [userQuery, setUserQuery] = useState('');
+  const [userLocation, setUserLocation] = useState('');
   const [response, setResponse] = useState('');
 
   const handleUserQuerySubmit = async () => {
     try {
-      const result = await runGeminiQuery(userQuery);
-      setResponse(result);
+      // const result = await runGeminiQuery(userQuery, userLocation);
+      // setResponse(result);
+      console.log('User Query:', userQuery);
+      console.log('User Location:', userLocation);
+      setResponse('This is a placeholder response. Gemini integration is currently commented out.');
     } catch (error) {
       console.error('Error running Gemini query:', error);
     }
@@ -23,6 +26,12 @@ const Gemini = () => {
         placeholder="Enter your query"
         value={userQuery}
         onChangeText={setUserQuery}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your location (zip code or city)"
+        value={userLocation}
+        onChangeText={setUserLocation}
       />
       <Button title="Submit Query" onPress={handleUserQuerySubmit} />
       <Text style={styles.response}>{response}</Text>
